@@ -1,6 +1,7 @@
 local uv = require('luv')
 
-local function create_server(host, port, on_connection)
+local M = {}
+M.create_server = function (host, port)
 	local server = uv.new_udp()
 	server:bind(host, port)
 	print("Listening on " .. host .. ":" .. port)
@@ -10,8 +11,7 @@ local function create_server(host, port, on_connection)
 			print(data)
 		end
 	end)
+	uv.run()
 end
-create_server("0.0.0.0", 300)
 
-uv.run()
-
+return M
