@@ -1,0 +1,3 @@
+[submodule "src/GoFromCsToTypescript"]
+	path = src/GoFromCsToTypescript
+	url = https://github.com/Wordluc/GoFromCsToTypescript.git
