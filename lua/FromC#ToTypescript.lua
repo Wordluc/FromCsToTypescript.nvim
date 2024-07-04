@@ -1,6 +1,5 @@
 local uv = require('luv')
 local M = {}
-
 local function manage_server(str, host, port)
 	local client = uv.new_udp()
 	client:send(str, host, port, function(err)
@@ -28,6 +27,7 @@ local function manage_server(str, host, port)
 end
 
 M.create_server = function(host, port, str)
+	uv.run() -- This is necessary to start the event loop
 	local handle, server_process = uv.spawn(
 		"C://Users//Usernexus//Desktop//PersonalProject//FromCsToTypeScript_PluginNvim//src//GoFromCsToTypescript//GoFromCsToTypescript.exe "
 		, { args = { 90 } }, function() end
@@ -39,7 +39,4 @@ M.create_server = function(host, port, str)
 	end
 end
 
-uv.run() -- This is necessary to start the event loop
-local str = vim.fn.getreg("")
-M.create_server("127.0.0.1", 90, str)
 return M
