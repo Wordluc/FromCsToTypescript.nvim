@@ -30,7 +30,7 @@ local function manage_server(str, host, port)
 	end)
 end
 
-M.create_server = function(port, str)
+M.convertDto = function(port, str)
 	uv.run("nowait") -- This is necessary to start the event loop
 	local script_path = debug.getinfo(1, "S").source:sub(2)
 	local executable_path = script_path:match(".*/") .. "../src/GoFromCsToTypescript/GoFromCsToTypescript.exe"
