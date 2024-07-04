@@ -8,7 +8,9 @@ local function manage_server(reg, host, port)
 			print("Error connecting to server:", err)
 			return
 		end
-		client:write(vim.fn.getreg(reg))
+		vim.schedule(function()
+			client:write(vim.fn.getreg(reg))
+		end)
 		client:read_start(function(err, data)
 			if err then
 				print("Error receiving data: ", err)
@@ -31,8 +33,8 @@ local function manage_server(reg, host, port)
 end
 
 M.convertDto = function(port, reg)
-	if reg==nil then
-    reg=""
+	if reg == nil then
+		reg = ""
 	end
 	uv.run("nowait") -- This is necessary to start the event loop
 	local script_path = debug.getinfo(1, "S").source:sub(2)
