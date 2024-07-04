@@ -29,12 +29,15 @@ end
 
 M.create_server = function(port, str)
 	uv.run("nowait") -- This is necessary to start the event loop
+	local script_path = debug.getinfo(1, "S").source:sub(2)
+	local executable_path = script_path:match(".*/") .. "../src/GoFromCsToTypescript/GoFromCsToTypescript.exe"
+
 	local handle, pid = uv.spawn(
-		"~\\..\\src\\GoFromCsToTypescript\\GoFromCsToTypescript.exe "
+		executable_path
 		, { args = { port } }, function() end
 	)
-	if handle==nil then
-    print("Error starting server:"..pid)
+	if handle == nil then
+		print("Error starting server:" .. pid)
 	end
 	if pid then
 		manage_server(str, "127.0.0.1", port)
@@ -44,4 +47,3 @@ M.create_server = function(port, str)
 	uv.stop()
 end
 return M
-
