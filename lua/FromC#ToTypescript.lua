@@ -29,14 +29,14 @@ end
 
 M.create_server = function(port, str)
 	uv.run("nowait") -- This is necessary to start the event loop
-	local handle, server_process = uv.spawn(
+	local handle, pid = uv.spawn(
 		"~\\..\\src\\GoFromCsToTypescript\\GoFromCsToTypescript.exe "
 		, { args = { port } }, function() end
 	)
 	if handle==nil then
-    print("Error starting server")
+    print("Error starting server:"..pid)
 	end
-	if server_process then
+	if pid then
 		manage_server(str, "127.0.0.1", port)
 	else
 		print("Error starting server creation job.")
