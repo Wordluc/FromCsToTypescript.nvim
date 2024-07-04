@@ -26,17 +26,18 @@ local function manage_server(str, host, port)
 	end)
 end
 
-M.create_server = function(host, port, str)
-	uv.run() -- This is necessary to start the event loop
+M.create_server = function(port, str)
+	uv.run("nowait") -- This is necessary to start the event loop
 	local handle, server_process = uv.spawn(
 		"C://Users//Usernexus//Desktop//PersonalProject//FromCsToTypeScript_PluginNvim//src//GoFromCsToTypescript//GoFromCsToTypescript.exe "
-		, { args = { 90 } }, function() end
+		, { args = { port } }, function() end
 	)
 	if server_process then
-		manage_server(str, host, port)
+		manage_server(str, "127.0.0.1", port)
 	else
 		print("Error starting server creation job.")
 	end
+	uv.stop()
 end
-
 return M
+
