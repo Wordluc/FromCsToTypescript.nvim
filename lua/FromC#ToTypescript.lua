@@ -16,6 +16,7 @@ local function manage_server(str, host, port)
 				local prova = vim.json.decode(data)
 				if prova.Status.Code == 200 then
 					vim.schedule(function()
+						print("Converted")
 						vim.fn.setreg("", prova.Body)
 					end)
 				else
@@ -29,9 +30,12 @@ end
 M.create_server = function(port, str)
 	uv.run("nowait") -- This is necessary to start the event loop
 	local handle, server_process = uv.spawn(
-		"C://Users//Usernexus//Desktop//PersonalProject//FromCsToTypeScript_PluginNvim//src//GoFromCsToTypescript//GoFromCsToTypescript.exe "
+		"~\\..\\src\\GoFromCsToTypescript\\GoFromCsToTypescript.exe "
 		, { args = { port } }, function() end
 	)
+	if handle==nil then
+    print("Error starting server")
+	end
 	if server_process then
 		manage_server(str, "127.0.0.1", port)
 	else
