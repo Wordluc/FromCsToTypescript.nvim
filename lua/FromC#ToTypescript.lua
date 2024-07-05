@@ -24,8 +24,8 @@ M.convertDto = function(reg)
 	stdout:read_start(function(_, data)
 		if data then
 			vim.schedule(function()
+				vim.fn.setreg(reg,data)
 				print("Converted")
-				vim.fn.setreg(reg)
 			end)
 		end
 	end)
