@@ -5,7 +5,7 @@ The signature is:
 ```
 require("FromC#ToTypeScript").convertDto(<register>)
 ```
-It takes optionally the register(by default it uses "" ) where get and store the converted code
+It takes optionally the register(by default it uses "" ) to get and store the converted code
 
 ## Install
   use { "Wordluc/FromC-ToTypeScript", branch = "master" }
