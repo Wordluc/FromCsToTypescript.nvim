@@ -9,13 +9,14 @@ M.convertDto = function(reg)
 	local stdin = uv.new_pipe()
 	local stdout = uv.new_pipe()
 	local stderr = uv.new_pipe()
-	local executable_path = "~\\..\\src\\GoFromCsToTypescript\\GoFromCsToTypescript.exe"
+	local script_path = debug.getinfo(1, "S").source:sub(2)
+	local executable_path = script_path:match(".*/") .. "../src/GoFromCsToTypescript/GoFromCsToTypescript.exe"
 
-	local _, pid = uv.spawn(
+	local handle, pid = uv.spawn(
 		executable_path
 		, { stdio = { stdin, stdout, stderr } }, function() end
 	)
-	if not pid then
+	if not pid or not handle then
 		print("Error starting server")
 		return
 	end
