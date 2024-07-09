@@ -1,6 +1,6 @@
 # nvim-dto-converter
 
-A Neovim plugin that converts C# DTO (Data Transfer Objects) to TypeScript DTOs.
+A Neovim plugin that converts C# DTO to TypeScript DTOs.
 The signature is:
 ```
 require("FromC#ToTypeScript").convertDto(<register>)
