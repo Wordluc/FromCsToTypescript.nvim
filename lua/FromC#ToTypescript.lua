@@ -11,7 +11,6 @@ M.convertDto = function(reg)
 	local stderr = uv.new_pipe()
 	local script_path = debug.getinfo(1, "S").source:sub(2)
 	local executable_path = script_path:match(".*/") .. "../src/GoFromCsToTypescript/GoFromCsToTypescript.exe"
-
 	local handle, pid = uv.spawn(
 		executable_path
 		, { stdio = { stdin, stdout, stderr } }, function() end
@@ -21,19 +20,21 @@ M.convertDto = function(reg)
 		return
 	end
 	stdin:write(vim.fn.getreg(reg))
-	stdout:read_start(function(_, data)
+	stdout:read_start(function(e, data)
+		assert(not e, e)
 		if data then
 			vim.schedule(function()
-				vim.fn.setreg(reg,data)
 				print("Converted")
+				vim.fn.setreg(reg, data)
 			end)
 		end
 	end)
-	stderr:read_start(function(_, data)
+	stderr:read_start(function(e, data)
+		assert(not e, e)
 		if data then
 			print(data)
 		end
 	end)
-	uv.stop()
 end
 return M
+
