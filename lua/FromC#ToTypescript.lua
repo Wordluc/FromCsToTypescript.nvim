@@ -10,7 +10,13 @@ M.convertDto = function(reg)
 	local stdout = uv.new_pipe()
 	local stderr = uv.new_pipe()
 	local script_path = debug.getinfo(1, "S").source:sub(2)
-	local executable_path = script_path:match(".*/") .. "../src/GoFromCsToTypescript/GoFromCsToTypescript.exe"
+	local executable_path
+	if vim.fn.has('win32') == 1 then
+		 executable_path = script_path:match(".*/") .. "../src/GoFromCsToTypescript/GoFromCsToTypescript.exe"
+	else
+		 executable_path = script_path:match(".*/") .. "../src/GoFromCsToTypescript/GoFromCsToTypescript"
+	 end
+
 	local handle, pid = uv.spawn(
 		executable_path
 		, { stdio = { stdin, stdout, stderr } }, function() end
